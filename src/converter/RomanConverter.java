@@ -31,6 +31,7 @@ public class RomanConverter implements Converter {
                 result -= current;
             } else {
                 result += current;
+
             }
             previous = current;
         }

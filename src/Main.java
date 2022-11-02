@@ -23,13 +23,14 @@ public class Main {
             }
 
         }
+
         String[] numbers = input.split(regArg[index]);
-
-
         int output = 0;
         if (converter.isRoman(numbers[0]) == converter.isRoman(numbers[1])) {
+            
             boolean isRoman = converter.isRoman(numbers[0]);
             int a, b;
+
             if (isRoman) {
                 a = converter.numbersToInt(numbers[0]);
                 b = converter.numbersToInt(numbers[1]);
@@ -47,13 +48,14 @@ public class Main {
             }
             if (isRoman) {
                 System.out.println(converter.intToRoman(output));
+            } else {
+                throw new IllegalArgumentException("т.к. формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)");
             }
-        } else {
-            throw new RuntimeException("т.к. используются одновременно разные системы счисления");
+            
         }
         return String.valueOf(output);
     }
-
+    
 
     public static void main(String[] args) {
 
@@ -61,7 +63,7 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         try {
-          input = reader.readLine();
+            input = reader.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
