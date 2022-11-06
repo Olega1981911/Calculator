@@ -1,47 +1,38 @@
 package converter;
 
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
+import java.util.regex.Pattern;
 
 public class RomanConverter implements Converter {
-
-    Map<Character, Integer> romanNumber = new HashMap<>();
-
-
-    {
-        romanNumber.put('I', 1);
-        romanNumber.put('V', 5);
-        romanNumber.put('X', 10);
-        romanNumber.put('L', 50);
-        romanNumber.put('C', 100);
-        romanNumber.put('D', 500);
-        romanNumber.put('M', 1000);
-
-    }
+    private static final Pattern romanPattern = Pattern.compile("^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$");
 
 
     @Override
-    public int numbersToInt(String number) {
-        int result = number.length() - 1;
-        int previous = 0;
-        for (int i = result; i >= 0; i--) {
-            int current = romanNumber.get(number.charAt(i));
-            if (current < previous) {
-                result -= current;
+    public int romanToInt(String roman) {
+        int result = 0;
+        List<RomanNumbers> romanNumerals = RomanNumbers.getReverseSortedValues();
+        int i = 0;
+        while ((roman.length() > 0) && (i < romanNumerals.size())) {
+            RomanNumbers symbol = romanNumerals.get(i);
+            if (roman.startsWith(symbol.name())) {
+                result += symbol.getValue();
+                roman = roman.substring(symbol.name().length());
             } else {
-                result += current;
-
+                i++;
             }
-            previous = current;
+
         }
         return result;
     }
 
+
     @Override
     public boolean isRoman(String number) {
 
-        return romanNumber.containsKey(number.charAt(0));
+
+        return romanPattern.matcher(number).matches();
     }
 
     @Override
@@ -54,18 +45,17 @@ public class RomanConverter implements Converter {
         List<RomanNumbers> romanNumerals = RomanNumbers.getReverseSortedValues();
 
         int i = 0;
-        StringBuilder sb = new StringBuilder();
-
+        StringBuilder result = new StringBuilder();
         while ((number > 0) && (i < romanNumerals.size())) {
             RomanNumbers currentSymbol = romanNumerals.get(i);
             if (currentSymbol.getValue() <= number) {
-                sb.append(currentSymbol.name());
+                result.append(currentSymbol.name());
                 number -= currentSymbol.getValue();
             } else {
                 i++;
             }
         }
 
-        return sb.toString();
+        return result.toString();
     }
 }

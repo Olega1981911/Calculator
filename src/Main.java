@@ -3,12 +3,12 @@ import converter.RomanConverter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.regex.Pattern;
 
 public class Main {
     static String input;
     static RomanConverter converter = new RomanConverter();
     static String[] reg = {"+", "-", "/", "*"};
-    static String[] regArg = {"\\+", "-", "/", "\\*"};
 
     public static String calc(String input) {
 
@@ -24,19 +24,21 @@ public class Main {
 
         }
 
-        String[] numbers = input.split(regArg[index]);
+
+        // String[] numbers = input.split(regArg[index]);
+        String[] numbers = input.split(Pattern.quote(reg[index]));
         if (numbers.length > 2) {
             throw new IllegalArgumentException("формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)");
         }
-        int output = 0;
+        int output;
         if (converter.isRoman(numbers[0]) == converter.isRoman(numbers[1])) {
 
             boolean isRoman = converter.isRoman(numbers[0]);
             int a, b;
 
             if (isRoman) {
-                a = converter.numbersToInt(numbers[0]);
-                b = converter.numbersToInt(numbers[1]);
+                a = converter.romanToInt(numbers[0]);
+                b = converter.romanToInt(numbers[1]);
             } else {
                 a = Integer.parseInt(numbers[0]);
                 b = Integer.parseInt(numbers[1]);
@@ -65,7 +67,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-
+        String input;
         System.out.println("введите математическое выражение:");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -75,7 +77,8 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        System.out.println(calc(input));
+        String calculatedResult = calc(input.replaceAll(" ", ""));
+        System.out.println(calculatedResult);
 
     }
 }
