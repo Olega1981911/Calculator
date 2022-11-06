@@ -17,11 +17,12 @@ public class Main {
         for (int i = 0; i < reg.length; i++) {
             if (input.contains(reg[i])) {
                 index = i;
-            } else if (index == -1) {
+                 break;
+            } 
+
+        }
+        if (index == -1) {
                 throw new IllegalArgumentException("т.к. строка не является математической операцией");
-
-            }
-
         }
 
 
