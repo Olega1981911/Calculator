@@ -2,7 +2,7 @@ package converter;
 
 public interface Converter {
     //int numbersToInt(String number);
-    int romanToInt(String roman);
+    int romanToInt(String number);
 
     boolean isRoman(String number);
 
