@@ -55,9 +55,10 @@ public class Main {
                 default ->
                         throw new IllegalArgumentException("т.к. формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)");
             }
-            if (isRoman) {
+            if (isRoman && output <= 0) {
+                throw new IllegalArgumentException("результат вычисления в римских цифрах не должен быть меньше 1");
+            } else {
                 System.out.println(converter.intToRoman(output));
-
             }
 
         } else {
