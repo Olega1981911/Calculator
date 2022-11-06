@@ -26,7 +26,7 @@ public class Main {
         }
 
 
-        // String[] numbers = input.split(regArg[index]);
+        
         String[] numbers = input.split(Pattern.quote(reg[index]));
         if (numbers.length > 2) {
             throw new IllegalArgumentException("формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)");
